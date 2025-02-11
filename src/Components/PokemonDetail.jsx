@@ -1,12 +1,10 @@
 import styled from "styled-components";
-const PokemonDetail = () => {
- 
+const PokemonDetail = ({ locatedFindId }) => {
   return (
     <DetailPokemon>
-      <Tag1></Tag1>
-      <Tag2 />
-      <Tag3></Tag3>
-      <Tag4></Tag4>
+      <Tag2 src={locatedFindId.img_url} alt={locatedFindId.korean_name} />
+      <Tag3>{locatedFindId.korean_name}</Tag3>
+      <Tag4>{locatedFindId.types}</Tag4>
     </DetailPokemon>
   );
 };

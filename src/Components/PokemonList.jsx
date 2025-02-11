@@ -15,9 +15,8 @@ const MainBox1 = styled.div`
   justify-content: space-between;
 `;
 
-const PokemonList = ({ pokemons, Addpokemon }) => {
+const PokemonList = ({ pokemons, AddPokemons }) => {
   const navigate = useNavigate();
-
   return (
     <>
       {pokemons.map((pokemon) => {
@@ -25,10 +24,10 @@ const PokemonList = ({ pokemons, Addpokemon }) => {
           <MainBox1
             key={pokemon.id}
             onClick={() => {
-              navigate("/detail");
+              navigate(`/detail?id=${pokemon.id}`);
             }}
           >
-            <PokemonCard pokemon={pokemon} Addpokemon={Addpokemon} />
+            <PokemonCard pokemon={pokemon} AddPokemons={AddPokemons} />
           </MainBox1>
         );
       })}

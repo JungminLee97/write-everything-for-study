@@ -2,22 +2,44 @@ import styled from "styled-components";
 import PokemonList from "../Components/PokemonList";
 import Dashboard from "../Components/Dashboard";
 import MOCK_DATA from "../Components/MOCK_DATA";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Dex = () => {
   const [pokemons, setPokemons] = useState(MOCK_DATA);
-  const [addpokemon, setAddpokemon] = useState([]);
-  const Addpokemon = (id) => {
-    const selected = pokemons.find((poke) => {
-      return poke.id === id;
-    });
-    setAddpokemon([...addpokemon, selected]);
+  const [emptyArray, SetEmptyArray] = useState([]);
+
+  useEffect(() => {
+    const savedPokemons = localStorage.getItem("selectedPokemons");
+    if (savedPokemons) {
+      SetEmptyArray(JSON.parse(savedPokemons));
+    }
+  }, []);
+
+  const AddPokemons = (id) => {
+    if (emptyArray.find((ar) => ar.id === id)) {
+      alert("같은포켓몬은 잡을수없습니다.");
+      return;
+    }
+    if (emptyArray.length >= 6) {
+      alert("더 이상 추가할 수 없습니다! (최대 6개)");
+      return;
+    }
+    const FindArray = pokemons.find((poke) => poke.id === id);
+    const updatedArray = [...emptyArray, FindArray];
+    SetEmptyArray(updatedArray);
+    localStorage.setItem("selectedPokemons", JSON.stringify(updatedArray));
+  };
+
+  const deletedArray = (arr) => {
+    const updatedArray = emptyArray.filter((empty) => empty.id !== arr.id);
+    SetEmptyArray(updatedArray);
+    localStorage.setItem("selectedPokemons", JSON.stringify(updatedArray));
   };
   return (
     <div>
-      <Dashboard addpokemon={addpokemon}></Dashboard>
+      <Dashboard emptyArray={emptyArray} deletedArray={deletedArray} />
       <MainBox>
-        <PokemonList pokemons={pokemons} Addpokemon={Addpokemon} />
+        <PokemonList pokemons={pokemons} AddPokemons={AddPokemons} />
       </MainBox>
     </div>
   );

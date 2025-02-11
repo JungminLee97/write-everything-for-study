@@ -1,9 +1,13 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
-
-const Dashboard = ({ addpokemon }) => {
+import pokeball from "../assets/pokeball.png";
+const Dashboard = ({ emptyArray, deletedArray }) => {
   const navigate = useNavigate();
-
+  const sixArray = Array(6)
+    .fill(null)
+    .map((_, index) => {
+      return emptyArray[index] ?? null;
+    });
   return (
     <>
       <NavBox>
@@ -12,11 +16,22 @@ const Dashboard = ({ addpokemon }) => {
           <BackToHomeBtn onClick={() => navigate("/")}>Home</BackToHomeBtn>
         </NavBox1>
         <NavBox2>
-          {addpokemon.map((poke) => {
-            return (
-              <NavBox3 key={poke.id}>
-                <img src={poke.img_url} alt={poke.korean_name} />
-                <p>{poke.korean_name}</p>
+          {sixArray.map((arr) => {
+            return arr ? (
+              <NavBox3 key={arr.index}>
+                <img src={arr.img_url} />
+                <p>{arr.types}</p>
+                <button
+                  onClick={() => {
+                    deletedArray(arr);
+                  }}
+                >
+                  삭제
+                </button>
+              </NavBox3>
+            ) : (
+              <NavBox3>
+                <NavPokeballImg src={pokeball} />
               </NavBox3>
             );
           })}

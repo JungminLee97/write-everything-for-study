@@ -1,10 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import PokemonDetail from "../Components/PokemonDetail";
-
+import MOCK_DATA from "../Components/MOCK_DATA";
 const Detail = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
+  const detailpage = new URLSearchParams(location.search);
+  const detailpageId = Number(detailpage.get("id"));
+  const locatedFindId = MOCK_DATA.find((arr) => arr.id === detailpageId);
   return (
     <DetailPageColor>
       <DetailBtn
@@ -14,7 +17,7 @@ const Detail = () => {
       >
         도감으로다시이동
       </DetailBtn>
-      <PokemonDetail />
+      <PokemonDetail locatedFindId={locatedFindId} />
     </DetailPageColor>
   );
 };

@@ -8,19 +8,18 @@ const ChangeDivTags = styled.div`
 const ChangeBtn = styled.button`
   margin: 8px;
 `;
-const PokemonCard = ({ pokemon, Addpokemon }) => {
+const PokemonCard = ({ pokemon, AddPokemons }) => {
   return (
     <ChangeDivTags>
       <img src={pokemon.img_url} />
-      <p>{pokemon.korean_name}</p>
-      <p>{pokemon.types.join(",")}</p>
+      <p>{pokemon.types}</p>
       <ChangeBtn
         onClick={(e) => {
           e.stopPropagation();
-          Addpokemon(pokemon.id);
+          AddPokemons(pokemon.id);
         }}
       >
-        추가버튼
+        추가
       </ChangeBtn>
     </ChangeDivTags>
   );
